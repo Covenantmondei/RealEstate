@@ -1,0 +1,19 @@
+venv/
+
+# pycache files
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*$py.class
+
+# migration caches
+migrations/__pycache__/
+migrations/*.pyc
+migrations/*.pyo
+
+# environment variables
+.env
+.env.local
+
+db.sqlite3
