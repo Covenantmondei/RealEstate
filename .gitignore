@@ -7,6 +7,11 @@ __pycache__/
 *.pyo
 *$py.class
 
+# router caches
+routers/__pycache__/
+routers/*.pyc
+routers/*.pyo
+
 # migration caches
 migrations/__pycache__/
 migrations/*.pyc
@@ -17,3 +22,4 @@ migrations/*.pyo
 .env.local
 
 db.sqlite3
+realestate.db
