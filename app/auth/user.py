@@ -3,11 +3,12 @@ from fastapi import HTTPException, status
 from fastapi_mail import FastMail, MessageSchema
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import IntegrityError
+from jose import JWTError
 from .hash import Hash
 from .models import User
-from .oauth2 import create_access_token, create_verification_token
+from .oauth2 import create_access_token, create_verification_token, verify_token
 from .schemas import UserBase
-from config import conf
+from app.config import conf
 
 
 async def create_user(db: Session, request: UserBase):
@@ -34,7 +35,8 @@ async def create_user(db: Session, request: UserBase):
             last_name = request.last_name,
             username = request.username,
             password = Hash.bcrypt(request.password),
-            is_verified = False
+            is_verified = False,
+            role = request.role
         )
         db.add(new_user)
         db.commit()
@@ -87,12 +89,52 @@ def login_user(db: Session, username: str, password: str):
     }
 
 
+async def verify_email(token: str, db: Session):
+    try:
+        payload = verify_token(token)
+        
+        if payload.get("type") != "email_verification":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid token type"
+            )
+        
+        user_id = payload.get("user_id")
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid token"
+            )
+        
+        # Get user from database
+        user_obj = db.query(User).filter(User.id == user_id).first()
+        if not user_obj:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+        
+        if user_obj.is_verified:
+            return {"message": "Email already verified"}
+        
+        # Update user's verification status
+        user_obj.is_verified = True
+        db.commit()
+        
+        return {"message": "Email verified successfully"}
+    
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired token"
+        )
+
 
 async def send_verification_email(email: str, user_id: int):
     token = create_verification_token(user_id)
 
     link = os.environ.get("URL")
-    verification_link = f"{link}/verify-email?token=(token)"
+    verification_link = f"{link}/auth/verify-email?token={token}"
 
     message = MessageSchema(
         subject="verify your email",

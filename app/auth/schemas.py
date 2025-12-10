@@ -1,5 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
+from datetime import datetime
+
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -8,6 +10,8 @@ class UserBase(BaseModel):
     username: Optional[str] = None
     password: str
     is_verified: bool = False
+    role: str = "buyer"  # buyer or agent
+    # created_at: datetime
 
 
 class UserDisplay(BaseModel):
@@ -17,9 +21,10 @@ class UserDisplay(BaseModel):
     last_name: Optional[str] = None
     username: Optional[str] = None
     is_verified: bool = False
+    role: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserLogin(BaseModel):
@@ -30,3 +35,21 @@ class UserLogin(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class AgentProfileBase(BaseModel):
+    phone_number: Optional[str] = None
+    bio: Optional[str] = None
+    company: Optional[str] = None
+    license_number: Optional[str] = None
+    years_experience: Optional[int] = None
+
+
+class AgentProfileDisplay(AgentProfileBase):
+    id: int
+    user_id: int
+    profile_picture: Optional[str] = None
+    updated_at: datetime
+    
+    class Config:
+        from_attributes = True

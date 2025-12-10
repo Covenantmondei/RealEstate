@@ -1,7 +1,9 @@
 from fastapi import FastAPI
-from database import Base, engine
-from routers import user
+from app.database import Base, engine
+from app.routers import user
 
+from app.auth.models import User, AgentProfile
+from app.property.models import UserProperty, PropertyImage, Favorite
 
 Base.metadata.create_all(bind=engine)
 
