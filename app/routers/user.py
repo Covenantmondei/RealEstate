@@ -6,7 +6,8 @@ from app.auth import user
 
 
 from app.database import get_db
-from app.auth.schemas import UserBase, UserDisplay, UserLogin, Token
+from app.auth.schemas import UserBase, UserDisplay, UserLogin, Token, RefreshTokenRequest
+from app.auth.oauth2 import create_access_token, decode_refresh_token, generate_refresh_token
 
 
 router = APIRouter(
@@ -18,9 +19,32 @@ router = APIRouter(
 async def create_user(request: UserBase, db: Session = Depends(get_db)):
     return await user.create_user(db, request)
 
+
 @router.post("/login", response_model=Token)
 def login(request: UserLogin, db: Session = Depends(get_db)):
     return user.login_user(db, request.username, request.password)
+
+
+@router.post("/refresh", response_model=Token)
+def refresh_access_token(request: RefreshTokenRequest):
+    """Get new access token using refresh token"""
+    payload = decode_refresh_token(request.refresh_token)
+    
+    # Generate new tokens
+    token_data = {
+        "sub": payload.get("sub"),
+        "user_id": payload.get("user_id"),
+        "role": payload.get("role")
+    }
+    
+    new_access_token = create_access_token(token_data)
+    new_refresh_token = generate_refresh_token(token_data)
+    
+    return {
+        "access_token": new_access_token,
+        "refresh_token": new_refresh_token,
+        "token_type": "bearer"
+    }
 
 
 @router.get("/verify-email")

@@ -19,6 +19,29 @@ class PropertyImageDisplay(PropertyImageBase):
         from_attributes = True
 
 
+class AgentInfo(BaseModel):
+    id: int
+    username: str
+    email: str
+    first_name: str
+    last_name: str
+    
+    class Config:
+        from_attributes = True
+
+
+class ImageUploadResponse(BaseModel):
+    message: str
+    property_id: int
+    property_title: str
+    images_uploaded: int
+    images: List[PropertyImageDisplay]
+    agent: AgentInfo
+    
+    class Config:
+        from_attributes = True
+
+
 class PropertyBase(BaseModel):
     title: str
     description: str

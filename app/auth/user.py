@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from jose import JWTError
 from .hash import Hash
 from .models import User
-from .oauth2 import create_access_token, create_verification_token, verify_token
+from .oauth2 import create_access_token, generate_refresh_token, create_verification_token, verify_token
 from .schemas import UserBase
 from app.config import conf
 
@@ -55,7 +55,7 @@ async def create_user(db: Session, request: UserBase):
     
 
 def login_user(db: Session, username: str, password: str):
-    # filter by username
+    # filter by username or email
     user = db.query(User).filter(User.username == username).first() or db.query(User).filter(User.email == username).first()
     
     if not user:
@@ -73,18 +73,23 @@ def login_user(db: Session, username: str, password: str):
             headers={"WWW-Authenticate": "Bearer"}
         )
     
-    # Check if user is verified (
+    # Check if user is verified
     if not user.is_verified:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Please verify your email before logging in"
         )
     
-    # Create access token
-    access_token = create_access_token(data={"sub": user.username, "user_id": user.id})
+    # Prepare token data
+    token_data = {"sub": user.username, "user_id": user.id, "role": user.role}
+    
+    # Generate both tokens
+    access_token = create_access_token(token_data)
+    refresh_token = generate_refresh_token(token_data)
     
     return {
         "access_token": access_token,
+        "refresh_token": refresh_token,
         "token_type": "bearer"
     }
 

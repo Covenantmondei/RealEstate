@@ -13,8 +13,10 @@ class UserProperty(Base):
     agent_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     title = Column(String, nullable=False, index=True)
     description = Column(Text, nullable=False)
-    property_type = Column(String, nullable=False)  # house, apartment, condo, land, etc.
-    listing_type = Column(String, nullable=False)  # sale, rent
+    # house, apartment, condo, land, etc.
+    property_type = Column(String, nullable=False)
+    # sale, rent
+    listing_type = Column(String, nullable=False)  
     price = Column(Float, nullable=False)
     bedrooms = Column(Integer)
     bathrooms = Column(Integer)
@@ -24,8 +26,6 @@ class UserProperty(Base):
     state = Column(String, nullable=False)
     zip_code = Column(String)
     country = Column(String, default="USA")
-    latitude = Column(Float)
-    longitude = Column(Float)
     year_built = Column(Integer)
     parking_spaces = Column(Integer)
     amenities = Column(Text)  # JSON string of amenities
