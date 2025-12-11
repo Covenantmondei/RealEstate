@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - RealEstate Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">RP</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">RealEstate Pro</span>
+                </a>
+                <a href="index.html" class="text-gray-700 hover:text-blue-600 transition">← Back Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full">
+            <!-- Login Card -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+                    <p class="text-gray-600">Sign in to your account to continue</p>
+                </div>
+
+                <form id="loginForm" class="space-y-4">
+                    <!-- Email Input -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required>
+                        <div id="emailError" class="form-error hidden"></div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
+                        <div id="passwordError" class="form-error hidden"></div>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="flex items-center">
+                        <input type="checkbox" id="rememberMe" name="rememberMe" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="rememberMe" class="ml-2 text-sm text-gray-600">Remember me</label>
+                    </div>
+
+                    <!-- Form Error -->
+                    <div id="formError" class="form-error hidden p-3 bg-red-50 rounded"></div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-full">
+                        <span id="submitText">Sign In</span>
+                        <span id="submitSpinner" class="hidden ml-2">
+                            <svg class="animate-spin h-5 w-5 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <!-- Forgot Password -->
+                    <div class="text-center">
+                        <a href="#" class="text-sm text-blue-600 hover:text-blue-800 transition">Forgot your password?</a>
+                    </div>
+                </form>
+
+                <!-- Divider -->
+                <div class="my-6 flex items-center">
+                    <div class="flex-1 border-t border-gray-300"></div>
+                    <span class="px-2 text-sm text-gray-500">Don't have an account?</span>
+                    <div class="flex-1 border-t border-gray-300"></div>
+                </div>
+
+                <!-- Register Link -->
+                <a href="register.html" class="block text-center bg-gray-100 text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-200 transition font-semibold">
+                    Create Account
+                </a>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="mt-8 text-center text-sm text-gray-600">
+                <p>By signing in, you agree to our <a href="#" class="text-blue-600 hover:text-blue-800">Terms of Service</a> and <a href="#" class="text-blue-600 hover:text-blue-800">Privacy Policy</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+        <div class="bg-white rounded-lg p-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="text-center mt-4 text-gray-900">Signing in...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/helpers.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

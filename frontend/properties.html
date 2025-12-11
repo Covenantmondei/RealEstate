@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Properties - RealEstate Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">RP</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">RealEstate Pro</span>
+                </a>
+
+                <div id="navAuthLinks" class="hidden md:flex items-center gap-4">
+                    <a href="login.html" class="text-gray-700 hover:text-blue-600 transition">Sign In</a>
+                    <a href="register.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Browse Properties</h1>
+            <p class="text-gray-600">Find your perfect property from our extensive listings</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sidebar Filters -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-6">Filters</h2>
+
+                    <!-- Location Filter -->
+                    <div class="mb-6">
+                        <label class="form-label">Location</label>
+                        <input type="text" id="locationFilter" placeholder="City or State" class="form-input">
+                    </div>
+
+                    <!-- Property Type Filter -->
+                    <div class="mb-6">
+                        <label class="form-label">Property Type</label>
+                        <select id="typeFilter" class="form-select">
+                            <option value="">All Types</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="house">House</option>
+                            <option value="townhouse">Townhouse</option>
+                            <option value="commercial">Commercial</option>
+                        </select>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="mb-6">
+                        <label class="form-label">Price Range</label>
+                        <div class="space-y-2">
+                            <div class="flex gap-2">
+                                <input type="number" id="minPrice" placeholder="Min" class="form-input text-sm">
+                                <input type="number" id="maxPrice" placeholder="Max" class="form-input text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bedrooms Filter -->
+                    <div class="mb-6">
+                        <label class="form-label">Bedrooms</label>
+                        <select id="bedroomsFilter" class="form-select">
+                            <option value="">Any</option>
+                            <option value="1">1+</option>
+                            <option value="2">2+</option>
+                            <option value="3">3+</option>
+                            <option value="4">4+</option>
+                            <option value="5">5+</option>
+                        </select>
+                    </div>
+
+                    <!-- Bathrooms Filter -->
+                    <div class="mb-6">
+                        <label class="form-label">Bathrooms</label>
+                        <select id="bathroomsFilter" class="form-select">
+                            <option value="">Any</option>
+                            <option value="1">1+</option>
+                            <option value="1.5">1.5+</option>
+                            <option value="2">2+</option>
+                            <option value="3">3+</option>
+                        </select>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex gap-2">
+                        <button id="applyFiltersBtn" class="btn btn-primary flex-1">Apply</button>
+                        <button id="clearFiltersBtn" class="btn btn-secondary flex-1">Clear</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Properties Grid -->
+            <div class="lg:col-span-3">
+                <!-- View Toggle & Sorting -->
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex gap-2">
+                        <button id="gridViewBtn" class="btn btn-primary btn-sm">Grid View</button>
+                        <button id="listViewBtn" class="btn btn-secondary btn-sm">List View</button>
+                    </div>
+                    <div>
+                        <select id="sortBy" class="form-select text-sm">
+                            <option value="newest">Newest</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Properties Container -->
+                <div id="propertiesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Loading Skeletons -->
+                </div>
+
+                <!-- Pagination -->
+                <div id="paginationContainer" class="mt-8 flex justify-center gap-2">
+                    <!-- Pagination buttons -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2025 RealEstate Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+        <div class="bg-white rounded-lg p-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="text-center mt-4 text-gray-900">Loading properties...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/helpers.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/properties-listing.js"></script>
+</body>
+</html>

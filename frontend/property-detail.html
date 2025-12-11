@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Detail - RealEstate Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">RP</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">RealEstate Pro</span>
+                </a>
+                <a href="properties.html" class="text-gray-700 hover:text-blue-600 transition">← Back to Properties</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Property Images & Info -->
+            <div class="lg:col-span-2">
+                <!-- Image Gallery -->
+                <div class="mb-6 bg-white rounded-lg shadow overflow-hidden">
+                    <!-- Main Image -->
+                    <div id="mainImageContainer" class="w-full h-96 bg-gray-200 flex items-center justify-center relative">
+                        <img id="mainImage" src="/placeholder.svg?height=400&width=600" alt="Property main image" class="w-full h-full object-cover">
+                        <button id="favoriteBtn" class="absolute top-4 right-4 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition">
+                            <svg id="favoriteIcon" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Thumbnail Gallery -->
+                    <div id="thumbnailContainer" class="flex gap-2 p-4 overflow-x-auto bg-gray-100">
+                        <!-- Thumbnails loaded by JS -->
+                    </div>
+                </div>
+
+                <!-- Property Details -->
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <h1 id="propertyTitle" class="text-3xl font-bold text-gray-900 mb-4">Loading...</h1>
+                    <p id="propertyLocation" class="text-lg text-gray-600 mb-4">📍 Loading...</p>
+
+                    <!-- Key Features -->
+                    <div id="propertyFeatures" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 pb-6 border-b border-gray-200">
+                        <!-- Loaded by JS -->
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-3">Description</h3>
+                        <p id="propertyDescription" class="text-gray-600 leading-relaxed">Loading...</p>
+                    </div>
+
+                    <!-- Amenities -->
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-3">Amenities</h3>
+                        <div id="amenitiesList" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <!-- Loaded by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Similar Properties -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Similar Properties</h3>
+                    <div id="similarPropertiesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Loaded by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar: Agent & CTA -->
+            <aside class="lg:col-span-1">
+                <!-- Price Card -->
+                <div class="bg-white rounded-lg shadow p-6 mb-6 sticky top-24">
+                    <p class="text-gray-600 text-sm mb-2">Price</p>
+                    <h2 id="propertyPrice" class="text-4xl font-bold text-blue-600 mb-6">Loading...</h2>
+
+                    <!-- Contact Agent Button -->
+                    <button id="contactAgentBtn" class="btn btn-primary btn-lg w-full mb-3">Contact Agent</button>
+                    <button id="scheduleViewBtn" class="btn btn-secondary btn-lg w-full">Schedule Viewing</button>
+                </div>
+
+                <!-- Agent Card -->
+                <div id="agentCard" class="bg-white rounded-lg shadow p-6 mb-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Agent Information</h3>
+                    <div class="flex items-center mb-4">
+                        <img id="agentAvatar" src="/placeholder.svg?height=64&width=64" alt="Agent" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p id="agentName" class="font-bold text-gray-900">Loading...</p>
+                            <p id="agentTitle" class="text-sm text-gray-600">Real Estate Agent</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <p id="agentPhone" class="text-gray-700">📞 Loading...</p>
+                        <p id="agentEmail" class="text-gray-700">📧 Loading...</p>
+                    </div>
+                </div>
+
+                <!-- Property Stats -->
+                <div class="bg-gray-100 rounded-lg p-6">
+                    <h3 class="font-bold text-gray-900 mb-4">Property Stats</h3>
+                    <div id="propertyStats" class="space-y-3">
+                        <!-- Loaded by JS -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2025 RealEstate Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Contact Agent</h2>
+            <form id="contactForm" class="space-y-4">
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" id="contactName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Your Email</label>
+                    <input type="email" id="contactEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Your Phone</label>
+                    <input type="tel" id="contactPhone" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea id="contactMessage" class="form-textarea" rows="4" required></textarea>
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="btn btn-primary flex-1">Send</button>
+                    <button type="button" onclick="document.getElementById('contactModal').classList.add('hidden')" class="btn btn-secondary flex-1">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+        <div class="bg-white rounded-lg p-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="text-center mt-4 text-gray-900">Loading property...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/helpers.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/property-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealEstate Pro - Find Your Dream Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">RP</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">RealEstate Pro</span>
+                </div>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition">Home</a>
+                    <a href="properties.html" class="text-gray-700 hover:text-blue-600 transition">Browse Properties</a>
+                    <div id="navAuthLinks" class="flex gap-4">
+                        <a href="login.html" class="text-gray-700 hover:text-blue-600 transition">Sign In</a>
+                        <a href="register.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Get Started</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile menu -->
+            <div id="mobileMenu" class="hidden md:hidden pb-4 border-t border-gray-100">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Home</a>
+                <a href="properties.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Browse Properties</a>
+                <div id="navMobileAuthLinks" class="px-4 py-2 flex gap-2">
+                    <a href="login.html" class="flex-1 text-center text-gray-700 border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-50">Sign In</a>
+                    <a href="register.html" class="flex-1 text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20 md:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Find Your Dream Home</h1>
+                <p class="text-xl md:text-2xl text-blue-100 mb-12">Discover the perfect property from thousands of listings</p>
+                
+                <!-- Search Bar -->
+                <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 max-w-4xl mx-auto">
+                    <form id="heroSearchForm" class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                        <input type="text" id="heroLocation" placeholder="Location" class="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <select id="heroPropertyType" class="px-4 py-3 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                            <option value="">Property Type</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="house">House</option>
+                            <option value="townhouse">Townhouse</option>
+                            <option value="commercial">Commercial</option>
+                        </select>
+                        <input type="range" id="heroPrice" min="0" max="1000000" step="50000" class="px-4 py-3 border border-gray-300 rounded-lg">
+                        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold">Search</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold mb-12 text-center">Browse by Category</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 text-center cursor-pointer" onclick="window.location.href='properties.html?type=apartment'">
+                        <div class="text-5xl mb-4">🏢</div>
+                        <h3 class="font-bold text-lg mb-2">Apartments</h3>
+                        <p class="text-gray-600">Urban living spaces</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 text-center cursor-pointer" onclick="window.location.href='properties.html?type=house'">
+                        <div class="text-5xl mb-4">🏠</div>
+                        <h3 class="font-bold text-lg mb-2">Houses</h3>
+                        <p class="text-gray-600">Single family homes</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 text-center cursor-pointer" onclick="window.location.href='properties.html?type=townhouse'">
+                        <div class="text-5xl mb-4">🏘️</div>
+                        <h3 class="font-bold text-lg mb-2">Townhouses</h3>
+                        <p class="text-gray-600">Modern townhouses</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-6 text-center cursor-pointer" onclick="window.location.href='properties.html?type=commercial'">
+                        <div class="text-5xl mb-4">🏬</div>
+                        <h3 class="font-bold text-lg mb-2">Commercial</h3>
+                        <p class="text-gray-600">Business properties</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Properties Carousel -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center mb-12">
+                    <h2 class="text-3xl font-bold">Featured Properties</h2>
+                    <a href="properties.html" class="text-blue-600 hover:text-blue-800 font-semibold">View All →</a>
+                </div>
+                <div id="featuredCarousel" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Loaded by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">RealEstate Pro</h3>
+                    <p class="text-gray-400">Your trusted partner in finding the perfect property.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="properties.html" class="hover:text-white transition">Properties</a></li>
+                        <li><a href="login.html" class="hover:text-white transition">Sign In</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Follow Us</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p><a href="#" class="hover:text-white transition">Facebook</a></p>
+                        <p><a href="#" class="hover:text-white transition">Twitter</a></p>
+                        <p><a href="#" class="hover:text-white transition">Instagram</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 RealEstate Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+        <div class="bg-white rounded-lg p-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="text-center mt-4 text-gray-900">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/helpers.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

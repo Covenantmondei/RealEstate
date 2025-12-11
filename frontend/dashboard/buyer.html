@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard - RealEstate Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">RP</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">RealEstate Pro</span>
+                </a>
+                <button id="mobileMenuBtn" class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <div id="navAuthLinks" class="hidden md:flex items-center gap-4">
+                    <button onclick="logoutUser()" class="text-gray-700 hover:text-red-600 transition">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow p-6 sticky top-24">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Dashboard Menu</h2>
+                    <nav class="space-y-2">
+                        <a href="#overview" onclick="switchTab('overview')" class="dashboard-nav-link active block px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700">
+                            📊 Overview
+                        </a>
+                        <a href="#favorites" onclick="switchTab('favorites')" class="dashboard-nav-link block px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700">
+                            ❤️ My Favorites
+                        </a>
+                        <a href="#profile" onclick="switchTab('profile')" class="dashboard-nav-link block px-4 py-2 rounded-lg hover:bg-blue-50 text-gray-700">
+                            👤 Profile Settings
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <!-- Overview Tab -->
+                <div id="overviewTab" class="dashboard-tab active">
+                    <div class="bg-white rounded-lg shadow p-6 mb-6">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome, <span id="userName">User</span>!</h1>
+                        <p class="text-gray-600">Manage your properties and favorites from your personal dashboard</p>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <p class="text-gray-600 text-sm mb-2">Favorites Saved</p>
+                            <h3 class="text-3xl font-bold text-blue-600" id="favoritesCount">0</h3>
+                            <p class="text-gray-500 text-xs mt-2">Properties you've saved</p>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <p class="text-gray-600 text-sm mb-2">Account Status</p>
+                            <h3 class="text-2xl font-bold text-green-600">Active</h3>
+                            <p class="text-gray-500 text-xs mt-2">Your account is verified</p>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <p class="text-gray-600 text-sm mb-2">Member Since</p>
+                            <h3 id="memberSince" class="text-lg font-bold text-gray-900">Loading...</h3>
+                            <p class="text-gray-500 text-xs mt-2">Account creation date</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h2 class="text-lg font-bold text-gray-900 mb-4">Recent Favorites</h2>
+                        <div id="recentFavoritesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Loaded by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favorites Tab -->
+                <div id="favoritesTab" class="dashboard-tab hidden">
+                    <div class="bg-white rounded-lg shadow p-6 mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h1 class="text-3xl font-bold text-gray-900">My Favorites</h1>
+                            <button id="clearAllFavoritesBtn" class="btn btn-danger btn-sm">Clear All</button>
+                        </div>
+                        <p class="text-gray-600">All properties you've saved</p>
+                    </div>
+
+                    <!-- Favorites List -->
+                    <div id="favoritesListContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Loaded by JS -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyFavoritesState" class="bg-white rounded-lg shadow p-12 text-center hidden">
+                        <p class="text-5xl mb-4">❤️</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">No Favorites Yet</h3>
+                        <p class="text-gray-600 mb-6">Start exploring properties and save your favorites!</p>
+                        <a href="../properties.html" class="btn btn-primary">Browse Properties</a>
+                    </div>
+                </div>
+
+                <!-- Profile Settings Tab -->
+                <div id="profileTab" class="dashboard-tab hidden">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-6">Profile Settings</h1>
+
+                        <form id="profileForm" class="max-w-2xl space-y-6">
+                            <!-- Personal Information -->
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Personal Information</h2>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="form-group">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" id="firstName" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" id="lastName" class="form-input" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" id="email" class="form-input" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-input" placeholder="+1 (555) 000-0000">
+                                </div>
+                            </div>
+
+                            <!-- Address Information -->
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Address</h2>
+
+                                <div class="form-group">
+                                    <label for="address" class="form-label">Street Address</label>
+                                    <input type="text" id="address" class="form-input">
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="form-group">
+                                        <label for="city" class="form-label">City</label>
+                                        <input type="text" id="city" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">State</label>
+                                        <input type="text" id="state" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zipCode" class="form-label">ZIP Code</label>
+                                        <input type="text" id="zipCode" class="form-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Preferences -->
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Preferences</h2>
+
+                                <div class="space-y-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="emailNotifications" class="h-4 w-4 text-blue-600 rounded" checked>
+                                        <label for="emailNotifications" class="ml-2 text-gray-700">Receive email notifications for new properties</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="marketingEmails" class="h-4 w-4 text-blue-600 rounded">
+                                        <label for="marketingEmails" class="ml-2 text-gray-700">Receive marketing emails</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password Change -->
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Change Password</h2>
+
+                                <div class="form-group">
+                                    <label for="currentPassword" class="form-label">Current Password</label>
+                                    <input type="password" id="currentPassword" class="form-input">
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="form-group">
+                                        <label for="newPassword" class="form-label">New Password</label>
+                                        <input type="password" id="newPassword" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                        <input type="password" id="confirmPassword" class="form-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Form Messages -->
+                            <div id="profileError" class="form-error hidden p-3 bg-red-50 rounded"></div>
+                            <div id="profileSuccess" class="form-success hidden p-3 bg-green-50 rounded"></div>
+
+                            <!-- Buttons -->
+                            <div class="flex gap-3 pt-4">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                <button type="button" onclick="resetProfileForm()" class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </form>
+
+                        <!-- Danger Zone -->
+                        <div class="mt-12 p-6 border-2 border-red-200 rounded-lg bg-red-50">
+                            <h3 class="text-lg font-bold text-red-600 mb-4">Danger Zone</h3>
+                            <button id="deleteAccountBtn" class="btn btn-danger">Delete Account</button>
+                            <p class="text-sm text-red-600 mt-2">This action is permanent and cannot be undone.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2025 RealEstate Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+        <div class="bg-white rounded-lg p-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="text-center mt-4 text-gray-900">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div id="confirmDeleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Delete Account</h2>
+            <p class="text-gray-600 mb-6">Are you sure? This action is permanent and cannot be undone. All your data will be deleted.</p>
+            <div class="flex gap-2">
+                <button onclick="confirmDeleteAccount()" class="btn btn-danger flex-1">Delete</button>
+                <button onclick="document.getElementById('confirmDeleteModal').classList.add('hidden')" class="btn btn-secondary flex-1">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/helpers.js"></script>
+    <script src="../js/properties.js"></script>
+    <script src="../js/favorites.js"></script>
+    <script src="../js/buyer-dashboard.js"></script>
+</body>
+</html>

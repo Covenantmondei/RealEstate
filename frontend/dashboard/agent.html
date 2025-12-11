@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Dashboard - RealEstate Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">RP</span>
+                    </div>
+                    <span class="font-bold text-xl text-gray-900">RealEstate Pro</span>
+                </a>
+                <div id="navAuthLinks" class="hidden md:flex items-center gap-4">
+                    <button onclick="logoutUser()" class="text-gray-700 hover:text-red-600 transition">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Dashboard Tabs -->
+        <div class="mb-8">
+            <div class="flex gap-4 border-b border-gray-200">
+                <button onclick="switchTab('overview')" class="dashboard-tab-btn active pb-3 px-4 font-semibold text-gray-900 border-b-2 border-blue-600">
+                    📊 Overview
+                </button>
+                <button onclick="switchTab('properties')" class="dashboard-tab-btn pb-3 px-4 font-semibold text-gray-600 hover:text-gray-900">
+                    🏢 My Properties
+                </button>
+                <button onclick="switchTab('create')" class="dashboard-tab-btn pb-3 px-4 font-semibold text-gray-600 hover:text-gray-900">
+                    ➕ Create Property
+                </button>
+            </div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overviewTab" class="dashboard-tab">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <!-- Active Listings -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Active Listings</p>
+                    <h3 class="text-4xl font-bold text-blue-600" id="activeListingsCount">0</h3>
+                    <p class="text-gray-500 text-xs mt-2">Properties currently listed</p>
+                </div>
+
+                <!-- Total Views -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Total Views</p>
+                    <h3 class="text-4xl font-bold text-green-600" id="totalViewsCount">0</h3>
+                    <p class="text-gray-500 text-xs mt-2">All time views</p>
+                </div>
+
+                <!-- Pending Approvals -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Pending Approvals</p>
+                    <h3 class="text-4xl font-bold text-yellow-600" id="pendingApprovalsCount">0</h3>
+                    <p class="text-gray-500 text-xs mt-2">Awaiting admin review</p>
+                </div>
+
+                <!-- Revenue -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <p class="text-gray-600 text-sm mb-2">Total Value Listed</p>
+                    <h3 class="text-2xl font-bold text-purple-600" id="totalValue">$0</h3>
+                    <p class="text-gray-500 text-xs mt-2">Combined property value</p>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Recent Properties -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Recent Properties</h2>
+                    <div id="recentPropertiesContainer" class="space-y-3">
+                        <!-- Loaded by JS -->
+                    </div>
+                </div>
+
+                <!-- Performance Stats -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Quick Stats</h2>
+                    <div id="performanceStatsContainer" class="space-y-4">
+                        <!-- Loaded by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Properties Tab -->
+        <div id="propertiesTab" class="dashboard-tab hidden">
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-2xl font-bold text-gray-900">My Properties</h1>
+                    <button onclick="switchTab('create')" class="btn btn-primary">Add New Property</button>
+                </div>
+
+                <!-- Filters -->
+                <div class="flex gap-2 mb-4">
+                    <select id="propertyStatusFilter" class="form-select text-sm max-w-xs" onchange="filterProperties()">
+                        <option value="">All Status</option>
+                        <option value="approved">Approved</option>
+                        <option value="pending">Pending</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Properties Table -->
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Status</th>
+                            <th>Price</th>
+                            <th>Views</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="propertiesTableBody">
+                        <!-- Loaded by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyPropertiesState" class="bg-white rounded-lg shadow p-12 text-center hidden mt-6">
+                <p class="text-5xl mb-4">🏢</p>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">No Properties Yet</h3>
+                <p class="text-gray-600 mb-6">Start by creating your first property listing</p>
+                <button onclick="switchTab('create')" class="btn btn-primary">Create Property</button>
+            </div>
+        </div>
+
+        <!-- Create/Edit Property Tab -->
+        <div id="createTab" class="dashboard-tab hidden">
+            <div class="bg-white rounded-lg shadow p-6 max-w-4xl">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6">Create New Property</h1>
+
+                <form id="propertyForm" class="space-y-6">
+                    <!-- Basic Information -->
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Basic Information</h2>
+
+                        <div class="form-group">
+                            <label class="form-label">Property Title</label>
+                            <input type="text" id="propertyTitle" class="form-input" placeholder="e.g., Beautiful Modern Apartment" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea id="propertyDescription" class="form-textarea" rows="4" placeholder="Describe the property..." required></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="form-group">
+                                <label class="form-label">Property Type</label>
+                                <select id="propertyType" class="form-select" required>
+                                    <option value="">Select Type</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="house">House</option>
+                                    <option value="townhouse">Townhouse</option>
+                                    <option value="commercial">Commercial</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Price</label>
+                                <input type="number" id="propertyPrice" class="form-input" placeholder="500000" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Location</h2>
+
+                        <div class="form-group">
+                            <label class="form-label">Street Address</label>
+                            <input type="text" id="propertyAddress" class="form-input" required>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" id="propertyCity" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">State</label>
+                                <input type="text" id="propertyState" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ZIP Code</label>
+                                <input type="text" id="propertyZip" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Details -->
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Property Details</h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div class="form-group">
+                                <label class="form-label">Bedrooms</label>
+                                <input type="number" id="propertyBedrooms" class="form-input" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Bathrooms</label>
+                                <input type="number" id="propertyBathrooms" class="form-input" min="0" step="0.5" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area (sqft)</label>
+                                <input type="number" id="propertyArea" class="form-input" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Year Built</label>
+                                <input type="number" id="propertyYear" class="form-input" min="1900" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amenities -->
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Amenities</h2>
+
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="amenity-ac" class="h-4 w-4 text-blue-600 rounded">
+                                <label for="amenity-ac" class="ml-2 text-gray-700">Air Conditioning</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="amenity-heating" class="h-4 w-4 text-blue-600 rounded">
+                                <label for="amenity-heating" class="ml-2 text-gray-700">Heating</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="amenity-pool" class="h-4 w-4 text-blue-600 rounded">
+                                <label for="amenity-pool" class="ml-2 text-gray-700">Swimming Pool</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="amenity-garage" class="h-4 w-4 text-blue-600 rounded">
+                                <label for="amenity-garage" class="ml-2 text-gray-700">Garage</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="amenity-garden" class="h-4 w-4 text-blue-600 rounded">
+                                <label for="amenity-garden" class="ml-2 text-gray-700">Garden</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="amenity-security" class="h-4 w-4 text-blue-600 rounded">
+                                <label for="amenity-security" class="ml-2 text-gray-700">Security System</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Images -->
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b">Property Images</h2>
+
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                            <input type="file" id="propertyImages" multiple accept="image/*" class="hidden">
+                            <button type="button" onclick="document.getElementById('propertyImages').click()" class="btn btn-secondary">
+                                Upload Images
+                            </button>
+                            <p class="text-gray-600 text-sm mt-2">or drag and drop images here</p>
+                        </div>
+
+                        <div id="imagePreviewContainer" class="grid grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+                            <!-- Image previews loaded by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Form Messages -->
+                    <div id="propertyFormError" class="form-error hidden p-3 bg-red-50 rounded"></div>
+                    <div id="propertyFormSuccess" class="form-success hidden p-3 bg-green-50 rounded"></div>
+
+                    <!-- Buttons -->
+                    <div class="flex gap-3 pt-4">
+                        <button type="submit" class="btn btn-primary">Create Property</button>
+                        <button type="button" onclick="switchTab('properties')" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2025 RealEstate Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
+        <div class="bg-white rounded-lg p-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="text-center mt-4 text-gray-900">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/helpers.js"></script>
+    <script src="../js/properties.js"></script>
+    <script src="../js/agent-dashboard.js"></script>
+</body>
+</html>

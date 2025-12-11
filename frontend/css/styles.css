@@ -1,0 +1,225 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.3s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Property Cards */
+.property-card {
+  @apply bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer;
+}
+
+.property-card-image {
+  @apply w-full h-48 object-cover bg-gray-200;
+}
+
+.property-card-content {
+  @apply p-4;
+}
+
+.property-card-title {
+  @apply font-bold text-lg text-gray-900 mb-2 line-clamp-1;
+}
+
+.property-card-price {
+  @apply text-2xl font-bold text-blue-600 mb-2;
+}
+
+.property-card-location {
+  @apply text-gray-600 text-sm mb-3 flex items-center gap-1;
+}
+
+.property-card-features {
+  @apply flex gap-4 text-sm text-gray-600 mb-3;
+}
+
+.property-card-agent {
+  @apply flex items-center gap-2 pt-3 border-t border-gray-100;
+}
+
+.property-card-agent-avatar {
+  @apply w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600;
+}
+
+/* Loading Skeleton */
+.skeleton {
+  @apply bg-gray-200 rounded animate-pulse;
+}
+
+.skeleton-card {
+  @apply property-card;
+}
+
+.skeleton-card-image {
+  @apply property-card-image skeleton;
+}
+
+.skeleton-card-title {
+  @apply property-card-title skeleton h-5 mb-2;
+}
+
+.skeleton-card-price {
+  @apply property-card-price skeleton h-8 mb-2 w-24;
+}
+
+.skeleton-card-location {
+  @apply property-card-location skeleton h-4 w-32 mb-3;
+}
+
+/* Toast Notifications */
+.toast {
+  @apply bg-white rounded-lg shadow-lg p-4 max-w-xs animate-slide-in-up;
+  animation: slideInUp 0.3s ease-out;
+}
+
+.toast-success {
+  @apply border-l-4 border-green-500;
+}
+
+.toast-error {
+  @apply border-l-4 border-red-500;
+}
+
+.toast-info {
+  @apply border-l-4 border-blue-500;
+}
+
+/* Forms */
+.form-group {
+  @apply mb-4;
+}
+
+.form-label {
+  @apply block text-gray-700 font-semibold mb-2;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  @apply ring-2 ring-blue-600;
+}
+
+.form-textarea {
+  @apply resize-none;
+}
+
+.form-error {
+  @apply text-red-500 text-sm mt-1;
+}
+
+.form-success {
+  @apply text-green-500 text-sm mt-1;
+}
+
+/* Buttons */
+.btn {
+  @apply px-4 py-2 rounded-lg font-semibold transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-900 hover:bg-gray-300;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+.btn-success {
+  @apply bg-green-600 text-white hover:bg-green-700;
+}
+
+.btn-sm {
+  @apply px-3 py-1 text-sm;
+}
+
+.btn-lg {
+  @apply px-6 py-3 text-lg;
+}
+
+/* Tables */
+.table {
+  @apply w-full border-collapse;
+}
+
+.table th {
+  @apply bg-gray-100 px-4 py-3 text-left font-semibold text-gray-900 border-b border-gray-200;
+}
+
+.table td {
+  @apply px-4 py-3 border-b border-gray-200;
+}
+
+.table tbody tr:hover {
+  @apply bg-gray-50;
+}
+
+/* Utilities */
+.truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.gap-sm {
+  gap: 0.5rem;
+}
+
+.gap-md {
+  gap: 1rem;
+}
+
+.gap-lg {
+  gap: 1.5rem;
+}
