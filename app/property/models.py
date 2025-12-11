@@ -6,6 +6,12 @@ import enum
 from app.database import Base
 
 
+class ApprovalStatus(str, enum.Enum):
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+
+
 class UserProperty(Base):
     __tablename__ = "properties"
     
@@ -30,6 +36,9 @@ class UserProperty(Base):
     parking_spaces = Column(Integer)
     amenities = Column(Text)  # JSON string of amenities
     is_available = Column(Boolean, default=True)
+    is_approved = Column(Boolean, default=False)  # Needs admin approval
+    approval_status = Column(String, default=ApprovalStatus.PENDING.value)
+    rejection_reason = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     

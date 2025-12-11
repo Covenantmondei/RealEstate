@@ -38,6 +38,15 @@ async def create_user(db: Session, request: UserBase):
             is_verified = False,
             role = request.role
         )
+        
+        # Set approval status based on role
+        if request.role == "agent":
+            new_user.is_approved = False
+            new_user.approval_status = "pending"
+        else:
+            new_user.is_approved = True
+            new_user.approval_status = "approved"
+        
         db.add(new_user)
         db.commit()
         db.refresh(new_user)

@@ -1,5 +1,6 @@
 from re import U
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, status
+from sqlalchemy import false
 from sqlalchemy.orm import Session
 from typing import List, Optional
 import cloudinary.uploader
@@ -43,7 +44,10 @@ def create_property(db: Session, request: PropertyCreate, agent_id: int):
         country=request.country,
         year_built=request.year_built,
         parking_spaces=request.parking_spaces,
-        amenities=request.amenities
+        amenities=request.amenities,
+        is_approved=False,
+        approval_status="pending",
+        is_available=False
     )
     db.add(new_property)
     db.commit()
